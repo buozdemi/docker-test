@@ -12,13 +12,10 @@ else
 	mv wordpress/* .
 	rm -rf wordpress-6.3.1.tar.gz
 	rm -rf wordpress
-
-	sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
-	sed -i "s/password_here/$MYSQL_PASSWORD/g" wp-config-sample.php
-	sed -i "s/localhost/$MYSQL_HOSTNAME/g" wp-config-sample.php
-	sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
-	cp wp-config-sample.php wp-config.php
-
+	sh /var/www/tesla2.sh
+	rm -rf /var/www/tesla2.sh
+	wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_TITLE} --admin_user=${MYSQL_USER} --admin_password=${MYSQL_PASSWORD} --admin_email=${WP_ADMIN_EMAIL}
+	wp user create --allow-root ${WP_USER} ${WP_USER_EMAIL} --user_pass=${WP_USER_PASSWORD}
 fi
 
 exec "$@"

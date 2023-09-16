@@ -22,8 +22,6 @@ services:
     networks:
       - network
     restart: always
-    env_file:
-      - .env
 
   wordpress:
     container_name: wordpress

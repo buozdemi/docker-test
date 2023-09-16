@@ -18,10 +18,11 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && mv wp-cli.phar /usr/local/bin/wp
 
 COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/
-
-
+COPY ./tools/wp-config.php /var/www/
+COPY ./tools/tesla2.sh /var/www/
 COPY ./tools/create_wordpress.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/create_wordpress.sh
+RUN chmod 777 /var/www/tesla2.sh
 ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
 
 WORKDIR /var/www/html/
