@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dosya="/home/buozdemi/test2/srcs/.env"
+file1="./srcs/.env"
 
 while IFS= read -r line; do
   if [[ "$line" == "DOMAIN_NAME="* ]]; then
@@ -18,7 +18,7 @@ while IFS= read -r line; do
   elif [[ "$line" == "MYSQL_ROOT_PASSWORD="* ]]; then
     MYSQL_ROOT_PASSWORD="${line#*=}"
   fi
-done < "$dosya"
+done < "$file1"
 
 str1="CREATE DATABASE IF NOT EXISTS $MYSQL_DATABASE;
 CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';

@@ -1,4 +1,4 @@
-FROM debian:bookworm
+FROM debian:bullseye
 
 RUN apt-get update && apt-get -y install \
 	wget \
@@ -17,10 +17,11 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
   && chmod +x wp-cli.phar \
   && mv wp-cli.phar /usr/local/bin/wp
 
-COPY ./conf/www.conf /etc/php/8.2/fpm/pool.d/
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
 COPY ./tools/wp-config.php /var/www/
 COPY ./tools/tesla2.sh /var/www/
 COPY ./tools/create_wordpress.sh /usr/local/bin/
+RUN mkdir /run/php
 RUN chmod +x /usr/local/bin/create_wordpress.sh
 RUN chmod 777 /var/www/tesla2.sh
 ENTRYPOINT ["/usr/local/bin/create_wordpress.sh"]
@@ -29,5 +30,5 @@ WORKDIR /var/www/html/
 
 EXPOSE 9000
 
-CMD ["/usr/sbin/php-fpm8.2", "-F"]
+CMD ["/usr/sbin/php-fpm7.4", "-F"]
 
